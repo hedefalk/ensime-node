@@ -17,7 +17,8 @@
         "gulpfile.js",
         "node_modules",
         "typings/browser",
-        "typings/browser.d.ts"
+        "typings/browser.d.ts",
+        "release"
         ],
     "compileOnSave": false,
     "buildOnSave": false,

@@ -1,4 +1,4 @@
-import api = require("./server-api");
+import api = require("./typings/server-api");
 
 import _ = require ('lodash');
 
