@@ -124,7 +124,7 @@ describe("full-stack-smoke", () => {
                 return startServerFromAssemblyJar(assemblyJar, project)
             }
 
-            return clientStarterFromServerStarter(serverStarter)(dotEnsime, (msg) => {
+            return clientStarterFromServerStarter(serverStarter)(dotEnsime, "2.0.0-SNAPSHOT", (msg) => {
                 log.debug(msg);
             })
         });

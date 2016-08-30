@@ -16,7 +16,7 @@ function removeTrailingNewline(str: string) {
 //  Start an ensime client given path to .ensime. If server already running, just use, else startup that too.
 export default function(serverStarter: ServerStarter) {
   log.debug('creating client starter function from ServerStarter')
-  return function(parsedDotEnsime: DotEnsime, generalHandler: (msg: string) => any) : PromiseLike<ServerConnection> {
+  return function(parsedDotEnsime: DotEnsime, serverVersion: string, generalHandler: (msg: string) => any) : PromiseLike<ServerConnection> {
 
     log.debug('trying to start client')
     return new Promise<ServerConnection>((resolve, reject) => {
@@ -29,7 +29,7 @@ export default function(serverStarter: ServerStarter) {
           // server running, no need to start
           log.debug("port file already there, starting client");
           const httpPort = removeTrailingNewline(fs.readFileSync(httpPortFilePath).toString())
-          const connectionPromise = createConnection(httpPort, generalHandler)
+          const connectionPromise = createConnection(httpPort, generalHandler, serverVersion)
           connectionPromise.then((connection) => {
             log.debug("got a connection")
             resolve(connection);

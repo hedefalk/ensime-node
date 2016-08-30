@@ -1,5 +1,5 @@
 import loglevel = require('loglevel');
-const WebSocket = require("ws");
+import * as WebSocket from "ws";
 
 
 export interface NetworkClient {
@@ -17,11 +17,16 @@ export class TcpClient implements NetworkClient {
 }
   
 export class WebsocketClient implements NetworkClient {
-    websocket: any;
-    
-    constructor(httpPort: string, onConnected: () => any, onMsg: (msg: string) => any) {
+    websocket: WebSocket
+
+    constructor(httpPort: string, onConnected: () => any, onMsg: (msg: string) => any, serverVersion: string = "1.0") {
         let log = loglevel.getLogger('ensime-client');
-        this.websocket = new WebSocket("ws://localhost:" + httpPort + "/jerky");
+        
+        // Since 2.0
+        if(serverVersion && serverVersion >= "2")
+            this.websocket = new WebSocket("ws://localhost:" + httpPort + "/websocket", ["jerky"])
+        else 
+            this.websocket = new WebSocket("ws://localhost:" + httpPort + "/jerky");
     
         this.websocket.on("open", () => {
             log.debug("connecting websocket…");

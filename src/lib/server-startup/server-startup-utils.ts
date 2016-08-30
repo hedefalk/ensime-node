@@ -26,10 +26,17 @@ export function fixClasspath(javaHome: string, classpathList: string[]) {
 /**
  *  Make an array of java command line args for spawn
  */
-export function javaArgsOf(classpath: string, dotEnsimePath, ensimeServerFlags = "") {
-  const args = ["-classpath", classpath, `-Densime.config=${dotEnsimePath}`, "-Densime.protocol=jerk"]
-  if(ensimeServerFlags.length > 0) 
+export function javaArgsOf(classpath: string, dotEnsime: DotEnsime, serverVersion: string = "1.0.0", ensimeServerFlags = "") {
+  const args = ["-classpath", classpath, `-Densime.config=${dotEnsime.dotEnsimePath}`]
+  
+  if(serverVersion <= "2") {
+    args.push("-Densime.protocol=jerk")
+  }
+
+  if(ensimeServerFlags.length > 0) {
     args.push(ensimeServerFlags) // ## Weird, but extra " " broke everyting
+  } 
+  
   args.push("org.ensime.server.Server")
   return args
 }
@@ -60,11 +67,11 @@ function logServer(pid, cacheDir) {
 
 
 
-export function startServerFromClasspath(classpath: string[], dotEnsime: DotEnsime, serverFlags = "") : PromiseLike<ChildProcess> {
+export function startServerFromClasspath(classpath: string[], dotEnsime: DotEnsime, serverVersion: string, serverFlags = "") : PromiseLike<ChildProcess> {
   return new Promise<ChildProcess>((resolve, reject) => {
     const fixedClasspath = fixClasspath(dotEnsime.javaHome, classpath)
     const cmd = javaCmdOf(dotEnsime)
-    const args = javaArgsOf(fixedClasspath, dotEnsime.dotEnsimePath, serverFlags)
+    const args = javaArgsOf(fixedClasspath, dotEnsime, serverVersion, serverFlags)
     log.debug(`Starting Ensime server with ${cmd} ${_.join(args, " ")}`)
 
     ensureExists(dotEnsime.cacheDir).then( () => {
