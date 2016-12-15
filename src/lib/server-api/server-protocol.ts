@@ -60,14 +60,15 @@ export interface TypeInfo extends EntityInfo {
   pos?: SourcePosition
 }
 
-
-
 export interface SourcePosition extends Typehinted {}
 export interface EmptySourcePosition extends SourcePosition {}
 export interface OffsetSourcePosition extends SourcePosition {
   file: string
   offset: number
+  row?: number;
+  col?: number;
 }
+
 export interface LineSourcePosition extends SourcePosition {
   file: string
   line: number

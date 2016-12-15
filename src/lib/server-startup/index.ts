@@ -17,14 +17,14 @@ export function startServerFromFile(classpathFile: string, dotEnsime: DotEnsime,
       fs.readFile(classpathFile, {encoding: 'utf8'}, (err, classpathFileContents) => {
         if(err) 
           reject(err);
-        let classpathList = _.split(classpathFileContents, path.delimiter);
-        let pid = startServerFromClasspath(classpathList, dotEnsime, ensimeServerVersion, ensimeServerFlags)
+        const classpathList = _.split(classpathFileContents, path.delimiter);
+        const pid = startServerFromClasspath(classpathList, dotEnsime, ensimeServerVersion, ensimeServerFlags)
         pid.then(resolve);
       })
   });
 }
 
 export function startServerFromAssemblyJar(assemblyJar: string, dotEnsime: DotEnsime, ensimeServerVersion: string = "1.0.0", ensimeServerFlags = "") {
-  let cp = [assemblyJar].concat(dotEnsime.compilerJars)
+  const cp = [assemblyJar].concat(dotEnsime.compilerJars)
   return startServerFromClasspath(cp, dotEnsime, ensimeServerVersion, ensimeServerFlags)
 }
