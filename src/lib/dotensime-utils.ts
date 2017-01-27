@@ -12,8 +12,8 @@ import {readFile} from './file-utils';
 function readDotEnsime(path: string) : PromiseLike<string> {
   
   return readFile(path).then((raw) => {
-    let rows = raw.toString().split(new RegExp("\r?\n"))
-    let filtered = rows.filter((l) => l.indexOf(';;') != 0)
+    const rows = raw.toString().split(new RegExp("\r?\n"))
+    const filtered = rows.filter((l) => l.indexOf(';;') != 0)
     return filtered.join('\n')
   })
 }

@@ -10,9 +10,9 @@ build:
     - cd $NVM_DIR
     - git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
     - . "$NVM_DIR/nvm.sh"
-    - nvm ls || true
-    - nvm install $$NODE_VERSION || true
-    - nvm use $$NODE_VERSION || true
+    - set -ex; nvm install $$NODE_VERSION
+    - nvm ls
+    - nvm use $$NODE_VERSION
     - cd $DRONE_DIR
     - rm -rf node_modules
     - npm install --unsafe-perm

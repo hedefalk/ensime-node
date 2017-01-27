@@ -116,7 +116,7 @@ describe("full-stack-smoke", () => {
             log.debug("got a parsed .ensime")
            
             const serverStarter : ServerStarter = (project: DotEnsime) => {
-                let assemblyJar = process.env.ENSIME_ASSEMBLY_JAR;
+                const assemblyJar = process.env.ENSIME_ASSEMBLY_JAR;
                 if(! assemblyJar) {
                     log.error("Please point to assembly jar with env ENSIME_ASSEMBLY_JAR")
                     fail("Please point to assembly jar with env ENSIME_ASSEMBLY_JAR")
@@ -124,7 +124,7 @@ describe("full-stack-smoke", () => {
                 return startServerFromAssemblyJar(assemblyJar, project)
             }
 
-            return clientStarterFromServerStarter(serverStarter)(dotEnsime, (msg) => {
+            return clientStarterFromServerStarter(serverStarter)(dotEnsime, "2.0.0-SNAPSHOT", (msg) => {
                 log.debug(msg);
             })
         });

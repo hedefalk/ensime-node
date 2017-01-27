@@ -20,7 +20,7 @@ export class InstanceManager<T> {
   }
 
   stopInstance(dotEnsime: DotEnsime) {
-    for (let instance of this.instances) {
+    for (const instance of this.instances) {
       if(instance.rootDir == dotEnsime.rootDir) {
         instance.destroy()
         this.instances = _.without(this.instances, instance)

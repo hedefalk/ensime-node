@@ -12,12 +12,12 @@ describe 'server-startup', ->
   
   describe 'javaArgsOf', ->
     it "should work without server flags", ->
-      args = javaArgsOf('monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar', '__.ensime__')
+      args = javaArgsOf('monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar', {dotEnsimePath: '__.ensime__'})
       expect(args).toEqual [ '-classpath', 'monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar',
        '-Densime.config=__.ensime__', '-Densime.protocol=jerk', 'org.ensime.server.Server' ]
   
     it "should work without with server flags", ->
-      args = javaArgsOf('monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar', '__.ensime__',
+      args = javaArgsOf('monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar', {dotEnsimePath: '__.ensime__'}, "1.0.0"
         '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=11111')
       expect(args).toEqual [ '-classpath', 'monkey.jar:a.jar:b.jar:__javaHome__/lib/tools.jar',
        '-Densime.config=__.ensime__', '-Densime.protocol=jerk', '-Xdebug
