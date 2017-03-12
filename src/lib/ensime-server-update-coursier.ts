@@ -10,7 +10,7 @@ const download = require('download');
 import {ensureExists} from './file-utils'
 
 function proxyArgs(proxySettings?: ProxySettings) {
-  const args = []
+  const args = [];
   if (proxySettings != undefined) {
     args.push('-Dhttp.proxyHost=' + proxySettings.host);
     args.push('-Dhttps.proxyHost=' + proxySettings.host);
@@ -24,8 +24,8 @@ function proxyArgs(proxySettings?: ProxySettings) {
       args.push('-Dhttp.proxyPassword=' + proxySettings.password);
       args.push('-Dhttps.proxyPassword=' + proxySettings.password);
     }
-    return args
   }
+  return args;
 }
 
 function javaArgs(dotEnsime: DotEnsime, serverVersion: String, updateChanging: boolean) {
@@ -50,6 +50,7 @@ function javaArgs(dotEnsime: DotEnsime, serverVersion: String, updateChanging: b
     '-V', `org.scala-lang:scala-reflect:${scalaVersion}`,
     '-V', `org.scala-lang:scalap:${scalaVersion}`
   );
+  return args;
 }
 
 // Updates ensime server, invoke callback when done
@@ -95,7 +96,7 @@ export default function updateServer(tempdir: string, failure: (string, int) => 
           pid.on('close', (exitCode) => {
             if (exitCode == 0) {
               const classpath = _.join(_.split(_.trim(spaceSeparatedClassPath), /\s/), path.delimiter)
-              logger.debug['classpath', classpath]
+              logger.debug(['classpath', classpath])
               fs.writeFile(classpathFile, classpath, resolve)
             } else {
               logger.error('Ensime server update failed, exitCode: ', exitCode)
